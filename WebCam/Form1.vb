@@ -24,24 +24,24 @@ Public Class Form1
         cmdok.Visible = False
         dgv1.Rows.Add(1)
         Dim CAMARAS As VideoCaptureDeviceForm = New VideoCaptureDeviceForm()
-
+        ' CAMARAS.VideoDevice.Source = "USB2.0 PC CAMERA"
         If CAMARAS.ShowDialog() = DialogResult.OK Then
             CAMARA = CAMARAS.VideoDevice
 
+            'CAMARA.Source = "USB2.0 PC CAMERA"
             AddHandler CAMARA.NewFrame, New NewFrameEventHandler(AddressOf CAPTURAR)
             CAMARA.Start()
             cameraStarted = True
         Else
-
             Me.Close()
-
         End If
+        opeFile()
+        dgv1.Rows(1).Selected = True
     End Sub
     Private Sub CAPTURAR(sender As Object, eventArgs As NewFrameEventArgs)
 
         BMP = DirectCast(eventArgs.Frame.Clone(), Bitmap)
         pbcaptureimage.Image = BMP ' DirectCast(eventArgs.Frame.Clone(), Bitmap)
-
 
     End Sub
     Private Sub pbcapture_Click(sender As Object, e As EventArgs) Handles pbcapture.Click
@@ -70,12 +70,12 @@ Public Class Form1
     End Sub
 
     Private Sub cmdok_Click(sender As Object, e As EventArgs) Handles cmdok.Click
-        'Dim SD As New SaveFileDialog
-        'SD.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.Desktop
-        'SD.FileName = "Visual Capture " & Date.Now.ToString("MM/dd/yy/HH/mm/ss")
-        'SD.SupportMultiDottedExtensions = True
-        'SD.AddExtension = True
-        'SD.Filter = "PNG File|*.png"
+        Dim SD As New SaveFileDialog
+        SD.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.Desktop
+        SD.FileName = "Visual Capture " & Date.Now.ToString("MM/dd/yy/HH/mm/ss")
+        SD.SupportMultiDottedExtensions = True
+        SD.AddExtension = True
+        SD.Filter = "PNG File|*.png"
         'If SD.ShowDialog() = DialogResult.OK Then
         '    Try
         '        pbcaptureimage.Image.Save(SD.FileName, Imaging.ImageFormat.Png)
@@ -154,7 +154,7 @@ Public Class Form1
                     'If dgv1.Rows(f).Cells("Conversion").Value = False Then dgv1.Rows(f).Cells("Conversion").Value = "0"
                     'If dgv1.Rows(f).Cells("BackIn").Value = False Then dgv1.Rows(f).Cells("BackIn").Value = "0"
 
-                    sw.WriteLine(dgv1.Rows(f).Cells("VisitorName").Value & Chr(2) & dgv1.Rows(f).Cells("Age").Value & Chr(2) & dgv1.Rows(f).Cells("Address").Value & Chr(2) & ImageToBase64(dgv1.Rows(f).Cells("VisitorImage").Value, Imaging.ImageFormat.Png) & Chr(2) & dgv1.Rows(f).Cells("VisitordateAndTime").Value & Chr(2) & dgv1.Rows(f).Cells("OutTime").Value)
+                    sw.WriteLine(dgv1.Rows(f).Cells("VisitorName").Value & Chr(2) & dgv1.Rows(f).Cells("Age").Value & Chr(2) & dgv1.Rows(f).Cells("Address").Value & Chr(2) & ImageToBase64(dgv1.Rows(f).Cells("VisitorImage").Value, Imaging.ImageFormat.Png) & Chr(2) & dgv1.Rows(f).Cells("VisitordateAndTime").Value)
                     f = f + 1
                 Loop
             End If
@@ -202,11 +202,11 @@ Public Class Form1
     End Sub
 
     Private Sub cmdopen_Click(sender As Object, e As EventArgs) Handles cmdopen.Click
-        dgv1.Rows.Clear()
-        dgv1.Rows.Add(1)
+        opeFile()
+    End Sub
 
+    Sub opeFile()
         Using sr As StreamReader = New StreamReader("aa.txt")
-
             Dim g As Integer = 0
             Dim li As String
             Do Until sr.EndOfStream = True
@@ -218,38 +218,44 @@ Public Class Form1
                 dgv1.Rows(g).Cells("Address").Value = xyz(2)
                 dgv1.Rows(g).Cells("VisitorImage").Value = Base64ToImage(xyz(3))
                 dgv1.Rows(g).Cells("VisitordateAndTime").Value = xyz(4)
-                dgv1.Rows(g).Cells("OutTime").Value = xyz(5)
                 g = g + 1
             Loop
             sr.Close()
         End Using
     End Sub
 
-    Private Sub cmdSetOutTime_Click(sender As Object, e As EventArgs) Handles cmdSetOutTime.Click
-        dgv1.CurrentRow.Cells("OutTime").Value = Date.Now
+    Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
+        Dim image As Image = dgv1.CurrentRow.Cells("VisitorImage").Value
+        Dim scale As Single = 0.25
+        Dim newWidth As Single = image.Width * scale
+        Dim newHeight As Single = image.Height * scale
+        Dim destinationRect As New RectangleF(100, 100, newWidth, newHeight)
+        e.Graphics.DrawImage(image, destinationRect)
+
+        Dim printFont As New Font("Arial", 12)
+        Dim printBrush As New SolidBrush(Color.Black)
+        Dim textToPrint As String =
+         "Name:" + dgv1.CurrentRow.Cells("VisitorName").Value + vbNewLine _
+       + "Age: " + dgv1.CurrentRow.Cells("Age").Value + vbNewLine _
+       + "Address: " + dgv1.CurrentRow.Cells("Address").Value + vbNewLine _
+       + "Time: " + dgv1.CurrentRow.Cells("VisitordateAndTime").Value + vbNewLine
+
+        e.Graphics.DrawString(textToPrint, printFont, printBrush, 270, 100)
+
     End Sub
 
-    Private Sub txtSeacrh_TextChanged(sender As Object, e As EventArgs) Handles txtSeacrh.TextChanged
-        saerch()
-    End Sub
-    Sub saerch()
-        With dgv1
-            For i As Integer = 0 To .RowCount - 2
-                Dim aa As String = ""
-                For j As Integer = 1 To 5
-                    aa = aa & .Rows(i).Cells(j).Value.ToString
-                Next
-                If aa.ToLower.Contains(txtSeacrh.Text.ToLower) Then
-                    .Rows(i).Visible = True
-                Else
-                    .Rows(i).Visible = False
-                End If
-
-            Next
-        End With
+    Private Sub cmdPrintSelected_Click(sender As Object, e As EventArgs) Handles cmdPrintSelected.Click
+        PrintDocument1.Print()
     End Sub
 
-    Private Sub cmdClearSearch_Click(sender As Object, e As EventArgs) Handles cmdClearSearch.Click
-        txtSeacrh.Text = ""
+    Private Sub PrintPreviewDialog1_Load(sender As Object, e As EventArgs) Handles PrintPreviewDialog1.Load
+
+    End Sub
+
+    Private Sub cmdPrintPreview_Click(sender As Object, e As EventArgs) Handles cmdPrintPreview.Click
+        PrintPreviewDialog1.Document = PrintDocument1
+
+        ' Show the print preview dialog
+        PrintPreviewDialog1.ShowDialog()
     End Sub
 End Class

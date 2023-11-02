@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,25 +20,25 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.dgv1 = New System.Windows.Forms.DataGridView()
         Me.VisitorImage = New System.Windows.Forms.DataGridViewImageColumn()
         Me.VisitorName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Age = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VisitordateAndTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.OutTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cmdno = New System.Windows.Forms.Button()
         Me.cmdok = New System.Windows.Forms.Button()
         Me.pbcapture = New PictureBoxAbouAmmar.صورة_دائرة()
         Me.pbcaptureimage = New System.Windows.Forms.PictureBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmdopen = New System.Windows.Forms.Button()
-        Me.cmdSetOutTime = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtSeacrh = New System.Windows.Forms.TextBox()
-        Me.cmdClearSearch = New System.Windows.Forms.Button()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.cmdPrintSelected = New System.Windows.Forms.Button()
+        Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
+        Me.cmdPrintPreview = New System.Windows.Forms.Button()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbcapture, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbcaptureimage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -48,11 +48,11 @@ Partial Class Form1
         '
         Me.dgv1.AllowUserToAddRows = False
         Me.dgv1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgv1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.VisitorImage, Me.VisitorName, Me.Age, Me.Address, Me.VisitordateAndTime, Me.OutTime})
-        Me.dgv1.Location = New System.Drawing.Point(12, 12)
+        Me.dgv1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.VisitorImage, Me.VisitorName, Me.Age, Me.Address, Me.VisitordateAndTime})
+        Me.dgv1.Location = New System.Drawing.Point(12, 46)
         Me.dgv1.Name = "dgv1"
         Me.dgv1.RowTemplate.Height = 50
-        Me.dgv1.Size = New System.Drawing.Size(650, 313)
+        Me.dgv1.Size = New System.Drawing.Size(864, 717)
         Me.dgv1.TabIndex = 4
         '
         'VisitorImage
@@ -65,32 +65,31 @@ Partial Class Form1
         '
         Me.VisitorName.HeaderText = "Name"
         Me.VisitorName.Name = "VisitorName"
+        Me.VisitorName.Width = 200
         '
         'Age
         '
         Me.Age.HeaderText = "Age"
         Me.Age.Name = "Age"
+        Me.Age.Width = 30
         '
         'Address
         '
         Me.Address.HeaderText = "Address"
         Me.Address.Name = "Address"
+        Me.Address.Width = 300
         '
         'VisitordateAndTime
         '
-        Me.VisitordateAndTime.HeaderText = "In Time"
+        Me.VisitordateAndTime.HeaderText = "Time"
         Me.VisitordateAndTime.Name = "VisitordateAndTime"
-        '
-        'OutTime
-        '
-        Me.OutTime.HeaderText = "Out Time"
-        Me.OutTime.Name = "OutTime"
+        Me.VisitordateAndTime.Width = 150
         '
         'cmdno
         '
         Me.cmdno.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cmdno.Image = Global.WebCam.My.Resources.Resources.Actions_edit_delete_icon
-        Me.cmdno.Location = New System.Drawing.Point(958, 347)
+        Me.cmdno.Location = New System.Drawing.Point(1159, 380)
         Me.cmdno.Name = "cmdno"
         Me.cmdno.Size = New System.Drawing.Size(32, 24)
         Me.cmdno.TabIndex = 3
@@ -100,7 +99,7 @@ Partial Class Form1
         '
         Me.cmdok.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cmdok.Image = Global.WebCam.My.Resources.Resources.Ok_icon__1_1
-        Me.cmdok.Location = New System.Drawing.Point(920, 347)
+        Me.cmdok.Location = New System.Drawing.Point(1121, 380)
         Me.cmdok.Name = "cmdok"
         Me.cmdok.Size = New System.Drawing.Size(32, 24)
         Me.cmdok.TabIndex = 2
@@ -112,7 +111,7 @@ Partial Class Form1
         Me.pbcapture.BackgroundImage = Global.WebCam.My.Resources.Resources.Image_Capture_icon
         Me.pbcapture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.pbcapture.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.pbcapture.Location = New System.Drawing.Point(927, 331)
+        Me.pbcapture.Location = New System.Drawing.Point(1128, 364)
         Me.pbcapture.Name = "pbcapture"
         Me.pbcapture.Size = New System.Drawing.Size(52, 50)
         Me.pbcapture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -121,16 +120,15 @@ Partial Class Form1
         '
         'pbcaptureimage
         '
-        Me.pbcaptureimage.Location = New System.Drawing.Point(702, 12)
+        Me.pbcaptureimage.Location = New System.Drawing.Point(882, 43)
         Me.pbcaptureimage.Name = "pbcaptureimage"
         Me.pbcaptureimage.Size = New System.Drawing.Size(487, 313)
-        Me.pbcaptureimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.pbcaptureimage.TabIndex = 0
         Me.pbcaptureimage.TabStop = False
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(99, 383)
+        Me.Button1.Location = New System.Drawing.Point(95, 12)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 5
@@ -139,56 +137,51 @@ Partial Class Form1
         '
         'cmdopen
         '
-        Me.cmdopen.Location = New System.Drawing.Point(206, 383)
+        Me.cmdopen.Location = New System.Drawing.Point(14, 12)
         Me.cmdopen.Name = "cmdopen"
         Me.cmdopen.Size = New System.Drawing.Size(75, 23)
         Me.cmdopen.TabIndex = 6
         Me.cmdopen.Text = "Open"
         Me.cmdopen.UseVisualStyleBackColor = True
         '
-        'cmdSetOutTime
+        'PrintDocument1
         '
-        Me.cmdSetOutTime.Location = New System.Drawing.Point(587, 330)
-        Me.cmdSetOutTime.Name = "cmdSetOutTime"
-        Me.cmdSetOutTime.Size = New System.Drawing.Size(75, 23)
-        Me.cmdSetOutTime.TabIndex = 7
-        Me.cmdSetOutTime.Text = "Set Out Time"
-        Me.cmdSetOutTime.UseVisualStyleBackColor = True
         '
-        'Label1
+        'cmdPrintSelected
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 332)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(41, 13)
-        Me.Label1.TabIndex = 8
-        Me.Label1.Text = "Search"
+        Me.cmdPrintSelected.Location = New System.Drawing.Point(336, 17)
+        Me.cmdPrintSelected.Name = "cmdPrintSelected"
+        Me.cmdPrintSelected.Size = New System.Drawing.Size(90, 23)
+        Me.cmdPrintSelected.TabIndex = 7
+        Me.cmdPrintSelected.Text = "Print"
+        Me.cmdPrintSelected.UseVisualStyleBackColor = True
         '
-        'txtSeacrh
+        'PrintPreviewDialog1
         '
-        Me.txtSeacrh.Location = New System.Drawing.Point(60, 332)
-        Me.txtSeacrh.Name = "txtSeacrh"
-        Me.txtSeacrh.Size = New System.Drawing.Size(140, 20)
-        Me.txtSeacrh.TabIndex = 9
+        Me.PrintPreviewDialog1.AutoScrollMargin = New System.Drawing.Size(0, 0)
+        Me.PrintPreviewDialog1.AutoScrollMinSize = New System.Drawing.Size(0, 0)
+        Me.PrintPreviewDialog1.ClientSize = New System.Drawing.Size(400, 300)
+        Me.PrintPreviewDialog1.Enabled = True
+        Me.PrintPreviewDialog1.Icon = CType(resources.GetObject("PrintPreviewDialog1.Icon"), System.Drawing.Icon)
+        Me.PrintPreviewDialog1.Name = "PrintPreviewDialog1"
+        Me.PrintPreviewDialog1.Visible = False
         '
-        'cmdClearSearch
+        'cmdPrintPreview
         '
-        Me.cmdClearSearch.Location = New System.Drawing.Point(207, 328)
-        Me.cmdClearSearch.Name = "cmdClearSearch"
-        Me.cmdClearSearch.Size = New System.Drawing.Size(84, 23)
-        Me.cmdClearSearch.TabIndex = 10
-        Me.cmdClearSearch.Text = "Clear Serach"
-        Me.cmdClearSearch.UseVisualStyleBackColor = True
+        Me.cmdPrintPreview.Location = New System.Drawing.Point(220, 17)
+        Me.cmdPrintPreview.Name = "cmdPrintPreview"
+        Me.cmdPrintPreview.Size = New System.Drawing.Size(110, 23)
+        Me.cmdPrintPreview.TabIndex = 8
+        Me.cmdPrintPreview.Text = "Print Preview"
+        Me.cmdPrintPreview.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1209, 583)
-        Me.Controls.Add(Me.cmdClearSearch)
-        Me.Controls.Add(Me.txtSeacrh)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.cmdSetOutTime)
+        Me.ClientSize = New System.Drawing.Size(1385, 793)
+        Me.Controls.Add(Me.cmdPrintPreview)
+        Me.Controls.Add(Me.cmdPrintSelected)
         Me.Controls.Add(Me.cmdopen)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.dgv1)
@@ -202,7 +195,6 @@ Partial Class Form1
         CType(Me.pbcapture, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbcaptureimage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents pbcaptureimage As System.Windows.Forms.PictureBox
@@ -217,9 +209,8 @@ Partial Class Form1
     Friend WithEvents Age As DataGridViewTextBoxColumn
     Friend WithEvents Address As DataGridViewTextBoxColumn
     Friend WithEvents VisitordateAndTime As DataGridViewTextBoxColumn
-    Friend WithEvents OutTime As DataGridViewTextBoxColumn
-    Friend WithEvents cmdSetOutTime As Button
-    Friend WithEvents Label1 As Label
-    Friend WithEvents txtSeacrh As TextBox
-    Friend WithEvents cmdClearSearch As Button
+    Friend WithEvents PrintDocument1 As Printing.PrintDocument
+    Friend WithEvents cmdPrintSelected As Button
+    Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
+    Friend WithEvents cmdPrintPreview As Button
 End Class
