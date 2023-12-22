@@ -7,6 +7,7 @@ Public Class Form1
     Dim BMP As Bitmap
     Dim Cap As String = "Capture"
     Dim osd2 As New SaveFileDialog
+    Dim ofd2 As New OpenFileDialog
     Dim cameraStarted = False
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Try
@@ -22,7 +23,16 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cmdno.Visible = False
         cmdok.Visible = False
+
         dgv1.Rows.Add(1)
+
+        dgv1.Columns("Address").DefaultCellStyle.WrapMode = DataGridViewTriState.True
+        dgv1.Columns("ID").DefaultCellStyle.WrapMode = DataGridViewTriState.True
+
+        For Each column As DataGridViewColumn In dgv1.Columns
+            column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Next
+
         Dim CAMARAS As VideoCaptureDeviceForm = New VideoCaptureDeviceForm()
 
 
@@ -38,8 +48,8 @@ Public Class Form1
         End If
 
 
-        opeFile()
-        dgv1.CurrentCell = dgv1(0, 1)
+        'opeFile()
+        'dgv1.CurrentCell = dgv1(0, 1)
 
 
     End Sub
@@ -106,19 +116,20 @@ Public Class Form1
         '    Cap = "Capture"
         'End If 
         dgv1.CurrentRow.Cells("VisitorImage").Value = pbcaptureimage.Image
-        dgv1.CurrentRow.Cells("VisitorName").Value = "Vimlesh Kumar" & dgv1.CurrentRow.Index
-        dgv1.CurrentRow.Cells("Age").Value = 30 + dgv1.CurrentRow.Index * 2
-        dgv1.CurrentRow.Cells("Address").Value = "Pratapgad 505, kamothe, Navi Mumbai, mh 410209"
+        dgv1.CurrentRow.Cells("VisitorName").Value = "name Middle Title" & dgv1.CurrentRow.Index
+        dgv1.CurrentRow.Cells("ID").Value = "Adhar Card " & "123412341234"
+        dgv1.CurrentRow.Cells("Age").Value = "00"
+        dgv1.CurrentRow.Cells("Address").Value = "Flat no. , Building name,Area Name, City name, Pin Code"
         dgv1.CurrentRow.Cells("VisitordateAndTime").Value = Date.Now
 
         dgv1.CurrentRow.Cells("SN").Value = "0"
-        dgv1.CurrentRow.Cells("MobileNumber").Value = "0000000000"
+        dgv1.CurrentRow.Cells("MobileNumber").Value = "0123456789"
         dgv1.CurrentRow.Cells("OutTime").Value = Date.Now.AddHours(2)
         dgv1.CurrentRow.Cells("OfficerToMeet").Value = "OfficerToMeet"
         dgv1.CurrentRow.Cells("NatureOfWork").Value = "NatureOfWork"
         dgv1.CurrentRow.Cells("IssuingOfficer").Value = "IssuingOfficer"
         dgv1.CurrentRow.Cells("Reference").Value = "Reference"
-        dgv1.CurrentRow.Cells("TotalPerson").Value = "TotalPerson"
+        dgv1.CurrentRow.Cells("TotalPerson").Value = "1"
 
 
 
@@ -154,74 +165,84 @@ Public Class Form1
         osd2.InitialDirectory = "d:\_camera\"
 
         osd2.FileName = Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((Date.Today).DayOfWeek) & "_" & (Date.Today).Day & "_" & (Date.Today).Month & "_" & (Date.Today).Year & "_" & (TimeOfDay.Hour + 1) & "HRS"
-        'If (osd2.ShowDialog() = Windows.Forms.DialogResult.OK) Then
-        'Using sw As StreamWriter = New StreamWriter(osd2.FileName)
-        Using sw As StreamWriter = New StreamWriter("aa.txt")
+        If (osd2.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+            Using sw As StreamWriter = New StreamWriter(osd2.FileName)
+                ' Using sw As StreamWriter = New StreamWriter("aa.txt")
 
-            If dgv1.Rows.Count = 0 Then
-                sw.Write("")
-            Else
-                'Loop through and add list to the file.
-                Dim f As Integer = 0
-                Do Until f = dgv1.Rows.Count - 1
-                    'If dgv1.Rows(f).Cells("x").Value = False Then dgv1.Rows(f).Cells("x").Value = "0"
-                    'If dgv1.Rows(f).Cells("Column11").Value = False Then dgv1.Rows(f).Cells("Column11").Value = "0"
-                    'If dgv1.Rows(f).Cells("Conversion").Value = False Then dgv1.Rows(f).Cells("Conversion").Value = "0"
-                    'If dgv1.Rows(f).Cells("BackIn").Value = False Then dgv1.Rows(f).Cells("BackIn").Value = "0"
+                If dgv1.Rows.Count = 0 Then
+                        sw.Write("")
+                    Else
+                        'Loop through and add list to the file.
+                        Dim f As Integer = 0
+                        Do Until f = dgv1.Rows.Count - 1
+                            'If dgv1.Rows(f).Cells("x").Value = False Then dgv1.Rows(f).Cells("x").Value = "0"
+                            'If dgv1.Rows(f).Cells("Column11").Value = False Then dgv1.Rows(f).Cells("Column11").Value = "0"
+                            'If dgv1.Rows(f).Cells("Conversion").Value = False Then dgv1.Rows(f).Cells("Conversion").Value = "0"
+                            'If dgv1.Rows(f).Cells("BackIn").Value = False Then dgv1.Rows(f).Cells("BackIn").Value = "0"
 
-                    sw.WriteLine(dgv1.Rows(f).Cells("VisitorName").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("Age").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("Address").Value _
-                       & Chr(2) & ImageToBase64(dgv1.Rows(f).Cells("VisitorImage").Value, Imaging.ImageFormat.Png) _
-                       & Chr(2) & dgv1.Rows(f).Cells("VisitordateAndTime").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("SN").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("MobileNumber").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("OutTime").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("OfficerToMeet").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("NatureOfWork").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("IssuingOfficer").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("Reference").Value _
-                       & Chr(2) & dgv1.Rows(f).Cells("TotalPerson").Value
-                        )
-                    f = f + 1
-                Loop
-            End If
-            sw.Close()
-        End Using
-        'Me.lblplalistname.Text = "playlist=  " & osd2.FileName
-        'SaveToolStripMenuItem.Enabled = True
-        'End If
+                            sw.WriteLine(dgv1.Rows(f).Cells("VisitorName").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("ID").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("Age").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("Address").Value _
+                               & Chr(2) & ImageToBase64(dgv1.Rows(f).Cells("VisitorImage").Value, Imaging.ImageFormat.Png) _
+                               & Chr(2) & dgv1.Rows(f).Cells("VisitordateAndTime").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("SN").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("MobileNumber").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("OutTime").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("OfficerToMeet").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("NatureOfWork").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("IssuingOfficer").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("Reference").Value _
+                               & Chr(2) & dgv1.Rows(f).Cells("TotalPerson").Value
+                                )
+                            f = f + 1
+                        Loop
+                    End If
+                    sw.Close()
+                End Using
+            Me.lblplalistname.Text = "playlist=  " & osd2.FileName
+            'SaveToolStripMenuItem.Enabled = True
+        End If
     End Sub
     Sub opeFile()
         On Error Resume Next
-        Using sr As StreamReader = New StreamReader("aa.txt")
-            Dim g As Integer = 0
-            Dim li As String
-            Do Until sr.EndOfStream = True
-                li = sr.ReadLine()
-                dgv1.Rows.Insert(dgv1.CurrentRow.Index, 1)
-                Dim xyz As Array = Split(li, Chr(2))
-                dgv1.Rows(g).Cells("VisitorName").Value = xyz(0)
-                dgv1.Rows(g).Cells("Age").Value = xyz(1)
-                dgv1.Rows(g).Cells("Address").Value = xyz(2)
-                dgv1.Rows(g).Cells("VisitorImage").Value = Base64ToImage(xyz(3))
-                dgv1.Rows(g).Cells("VisitordateAndTime").Value = xyz(4)
+        If (ofd2.ShowDialog() = Windows.Forms.DialogResult.OK) Then
+            dgv1.Rows.Clear()
+            dgv1.Rows.Add(1)
 
-                dgv1.Rows(g).Cells("SN").Value = xyz(5)
-                dgv1.Rows(g).Cells("MobileNumber").Value = xyz(6)
-                dgv1.Rows(g).Cells("OutTime").Value = xyz(7)
-                dgv1.Rows(g).Cells("OfficerToMeet").Value = xyz(8)
-                dgv1.Rows(g).Cells("NatureOfWork").Value = xyz(9)
-                dgv1.Rows(g).Cells("IssuingOfficer").Value = xyz(10)
-                dgv1.Rows(g).Cells("Reference").Value = xyz(11)
-                dgv1.Rows(g).Cells("TotalPerson").Value = xyz(12)
+            Using sr As StreamReader = New StreamReader(ofd2.FileName)
+                'Using sr As StreamReader = New StreamReader("aa.txt")
+                Dim g As Integer = 0
+                Dim li As String
+                Do Until sr.EndOfStream = True
+                    li = sr.ReadLine()
+                    dgv1.Rows.Insert(dgv1.CurrentRow.Index, 1)
+                    Dim xyz As Array = Split(li, Chr(2))
+                    dgv1.Rows(g).Cells("VisitorName").Value = xyz(0)
+                    dgv1.Rows(g).Cells("ID").Value = xyz(1)
+                    dgv1.Rows(g).Cells("Age").Value = xyz(2)
+                    dgv1.Rows(g).Cells("Address").Value = xyz(3)
+                    dgv1.Rows(g).Cells("VisitorImage").Value = Base64ToImage(xyz(4))
+                    dgv1.Rows(g).Cells("VisitordateAndTime").Value = xyz(5)
+
+                    dgv1.Rows(g).Cells("SN").Value = xyz(6)
+                    dgv1.Rows(g).Cells("MobileNumber").Value = xyz(7)
+                    dgv1.Rows(g).Cells("OutTime").Value = xyz(8)
+                    dgv1.Rows(g).Cells("OfficerToMeet").Value = xyz(9)
+                    dgv1.Rows(g).Cells("NatureOfWork").Value = xyz(10)
+                    dgv1.Rows(g).Cells("IssuingOfficer").Value = xyz(11)
+                    dgv1.Rows(g).Cells("Reference").Value = xyz(12)
+                    dgv1.Rows(g).Cells("TotalPerson").Value = xyz(13)
 
 
 
-                g = g + 1
-            Loop
-            sr.Close()
-        End Using
+                    g = g + 1
+                Loop
+                sr.Close()
+                Me.lblplalistname.Text = "playlist=  " & ofd2.FileName
+
+            End Using
+        End If
     End Sub
     Private Sub dgv1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv1.CellContentClick
         If e.ColumnIndex = 1 Then
@@ -286,27 +307,28 @@ Public Class Form1
         Dim scale As Single = 0.25
         Dim newWidth As Single = image.Width * scale
         Dim newHeight As Single = image.Height * scale
-        Dim destinationRect As New RectangleF(650, 100, newWidth, newHeight)
+        Dim destinationRect As New RectangleF(630, 100, newWidth, newHeight)
         e.Graphics.DrawImage(image, destinationRect)
 
         Dim printFont As New Font("Arial", 12)
         Dim printBrush As New SolidBrush(Color.Black)
         Dim textToPrint As String =
-            "Sr. No." + vbNewLine _
+            "Sr. No." + dgv1.CurrentRow.Cells("SN").Value + vbNewLine _
           & "DOORDARSHAN KENDRA, MUMBAI" + vbNewLine _
           & "Worli, Mumbai - 400030" + vbNewLine _
-           & "_________________________________________" + vbNewLine _
+           & "--------------------------------------------" + vbNewLine _
             & "Reference:" + dgv1.CurrentRow.Cells("Reference").Value + vbNewLine _
-            & "Mobile Number:" + dgv1.CurrentRow.Cells("MobileNumber").Value + vbNewLine _
             & "Total Number:" + dgv1.CurrentRow.Cells("TotalPerson").Value + vbNewLine _
             & "Signature of Visitor:" + vbNewLine _
         & "Name:" + dgv1.CurrentRow.Cells("VisitorName").Value + vbNewLine _
-       & "Age: " + (dgv1.CurrentRow.Cells("Age").Value).ToString + vbNewLine _
+        & "ID:" + dgv1.CurrentRow.Cells("ID").Value + vbNewLine _
+       & "Age: " + (dgv1.CurrentRow.Cells("Age").Value).ToString + "   " _
+       & "Mobile Number:" + dgv1.CurrentRow.Cells("MobileNumber").Value + vbNewLine _
        & "Address: " + dgv1.CurrentRow.Cells("Address").Value + vbNewLine _
        & "Visiting Officer's name: " + dgv1.CurrentRow.Cells("OfficerToMeet").Value + vbNewLine _
        & "Nature of Work: " + dgv1.CurrentRow.Cells("NatureOfWork").Value + vbNewLine _
-       & "In  Time: " + dgv1.CurrentRow.Cells("VisitordateAndTime").Value + vbNewLine _
-       & "Out Time: " + dgv1.CurrentRow.Cells("OutTime").Value + vbNewLine _
+       & "In  Time: " + dgv1.CurrentRow.Cells("VisitordateAndTime").Value + "  " _
+       & "Out Time: " + vbNewLine _
        & "Issuing Officer's Signature: " + dgv1.CurrentRow.Cells("IssuingOfficer").Value + vbNewLine _
        + vbNewLine _
        & "Visited Officer's Name and Signature: " + vbNewLine _
@@ -314,11 +336,11 @@ Public Class Form1
         + vbNewLine _
        & "(Please keep this paper with you and return to Main Gate at the time of leaving Dooradrshan)"
 
-        e.Graphics.DrawString(textToPrint, printFont, printBrush, 100, 100)
+        e.Graphics.DrawString(textToPrint, printFont, printBrush, 70, 100)
 
-        drawRectangle(e, 400, 220, 200, 50)
-        drawRectangle(e, 600, 370, 200, 50)
-        drawRectangle(e, 600, 425, 200, 50)
+        drawRectangle(e, 380, 200, 200, 50)
+        drawRectangle(e, 580, 355, 200, 50)
+        drawRectangle(e, 580, 410, 200, 50)
 
     End Sub
 
@@ -335,5 +357,25 @@ Public Class Form1
 
         ' Show the print preview dialog
         PrintPreviewDialog1.ShowDialog()
+    End Sub
+
+    Private Sub cmdMarkOutTime_Click(sender As Object, e As EventArgs) Handles cmdMarkOutTime.Click
+        On Error Resume Next
+        dgv1.CurrentRow.Cells("OutTime").Value = Date.Now
+    End Sub
+
+    Private Sub cmdNew_Click(sender As Object, e As EventArgs) Handles cmdNew.Click
+        On Error Resume Next
+        dgv1.Rows.Clear()
+        dgv1.Rows.Add(1)
+    End Sub
+
+    Private Sub cmdDeleteRow_Click(sender As Object, e As EventArgs) Handles cmdDeleteRow.Click
+        On Error Resume Next
+        'If dgv1.SelectedRows.Count > 0 Then
+        dgv1.Rows.Remove(dgv1.CurrentRow)
+        'End If
+
+
     End Sub
 End Class
