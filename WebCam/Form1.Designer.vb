@@ -24,17 +24,6 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.dgv1 = New System.Windows.Forms.DataGridView()
-        Me.cmdno = New System.Windows.Forms.Button()
-        Me.cmdok = New System.Windows.Forms.Button()
-        Me.pbcapture = New PictureBoxAbouAmmar.صورة_دائرة()
-        Me.pbcaptureimage = New System.Windows.Forms.PictureBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmdopen = New System.Windows.Forms.Button()
-        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
-        Me.cmdPrintSelected = New System.Windows.Forms.Button()
-        Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
-        Me.cmdPrintPreview = New System.Windows.Forms.Button()
-        Me.cmdMarkOutTime = New System.Windows.Forms.Button()
         Me.SN = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VisitorImage = New System.Windows.Forms.DataGridViewImageColumn()
         Me.VisitorName = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -49,9 +38,21 @@ Partial Class Form1
         Me.IssuingOfficer = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Reference = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.TotalPerson = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cmdno = New System.Windows.Forms.Button()
+        Me.cmdok = New System.Windows.Forms.Button()
+        Me.pbcapture = New PictureBoxAbouAmmar.صورة_دائرة()
+        Me.pbcaptureimage = New System.Windows.Forms.PictureBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdopen = New System.Windows.Forms.Button()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.cmdPrintSelected = New System.Windows.Forms.Button()
+        Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
+        Me.cmdPrintPreview = New System.Windows.Forms.Button()
+        Me.cmdMarkOutTime = New System.Windows.Forms.Button()
         Me.lblplalistname = New System.Windows.Forms.Label()
         Me.cmdNew = New System.Windows.Forms.Button()
         Me.cmdDeleteRow = New System.Windows.Forms.Button()
+        Me.cmdChangeCamera = New System.Windows.Forms.Button()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbcapture, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbcaptureimage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -67,6 +68,91 @@ Partial Class Form1
         Me.dgv1.RowTemplate.Height = 50
         Me.dgv1.Size = New System.Drawing.Size(1559, 337)
         Me.dgv1.TabIndex = 4
+        '
+        'SN
+        '
+        Me.SN.HeaderText = "SN"
+        Me.SN.Name = "SN"
+        Me.SN.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.SN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.SN.Width = 30
+        '
+        'VisitorImage
+        '
+        Me.VisitorImage.HeaderText = "Photo"
+        Me.VisitorImage.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch
+        Me.VisitorImage.Name = "VisitorImage"
+        '
+        'VisitorName
+        '
+        Me.VisitorName.HeaderText = "Name"
+        Me.VisitorName.Name = "VisitorName"
+        Me.VisitorName.Width = 120
+        '
+        'ID
+        '
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.Width = 200
+        '
+        'Age
+        '
+        Me.Age.HeaderText = "Age"
+        Me.Age.Name = "Age"
+        Me.Age.Width = 30
+        '
+        'Address
+        '
+        Me.Address.HeaderText = "Address"
+        Me.Address.Name = "Address"
+        Me.Address.Width = 200
+        '
+        'MobileNumber
+        '
+        Me.MobileNumber.HeaderText = "Mobile Number"
+        Me.MobileNumber.Name = "MobileNumber"
+        Me.MobileNumber.Width = 80
+        '
+        'VisitordateAndTime
+        '
+        Me.VisitordateAndTime.HeaderText = "IN Time"
+        Me.VisitordateAndTime.Name = "VisitordateAndTime"
+        Me.VisitordateAndTime.Width = 120
+        '
+        'OutTime
+        '
+        Me.OutTime.HeaderText = "OutTime"
+        Me.OutTime.Name = "OutTime"
+        Me.OutTime.Width = 120
+        '
+        'OfficerToMeet
+        '
+        Me.OfficerToMeet.HeaderText = "OfficerToMeet"
+        Me.OfficerToMeet.Name = "OfficerToMeet"
+        Me.OfficerToMeet.Width = 120
+        '
+        'NatureOfWork
+        '
+        Me.NatureOfWork.HeaderText = "Nature Of Work"
+        Me.NatureOfWork.Name = "NatureOfWork"
+        '
+        'IssuingOfficer
+        '
+        Me.IssuingOfficer.HeaderText = "Issuing Officer"
+        Me.IssuingOfficer.Name = "IssuingOfficer"
+        Me.IssuingOfficer.Width = 120
+        '
+        'Reference
+        '
+        Me.Reference.HeaderText = "Reference"
+        Me.Reference.Items.AddRange(New Object() {"Rehersal", "Recording", "Live Telecast", "Personal Meet", "Reference"})
+        Me.Reference.Name = "Reference"
+        '
+        'TotalPerson
+        '
+        Me.TotalPerson.HeaderText = "Total Person"
+        Me.TotalPerson.Name = "TotalPerson"
+        Me.TotalPerson.Width = 50
         '
         'cmdno
         '
@@ -167,91 +253,6 @@ Partial Class Form1
         Me.cmdMarkOutTime.Text = "Mark Out Time"
         Me.cmdMarkOutTime.UseVisualStyleBackColor = True
         '
-        'SN
-        '
-        Me.SN.HeaderText = "SN"
-        Me.SN.Name = "SN"
-        Me.SN.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.SN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.SN.Width = 30
-        '
-        'VisitorImage
-        '
-        Me.VisitorImage.HeaderText = "Photo"
-        Me.VisitorImage.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch
-        Me.VisitorImage.Name = "VisitorImage"
-        '
-        'VisitorName
-        '
-        Me.VisitorName.HeaderText = "Name"
-        Me.VisitorName.Name = "VisitorName"
-        Me.VisitorName.Width = 120
-        '
-        'ID
-        '
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.Width = 200
-        '
-        'Age
-        '
-        Me.Age.HeaderText = "Age"
-        Me.Age.Name = "Age"
-        Me.Age.Width = 30
-        '
-        'Address
-        '
-        Me.Address.HeaderText = "Address"
-        Me.Address.Name = "Address"
-        Me.Address.Width = 200
-        '
-        'MobileNumber
-        '
-        Me.MobileNumber.HeaderText = "Mobile Number"
-        Me.MobileNumber.Name = "MobileNumber"
-        Me.MobileNumber.Width = 80
-        '
-        'VisitordateAndTime
-        '
-        Me.VisitordateAndTime.HeaderText = "IN Time"
-        Me.VisitordateAndTime.Name = "VisitordateAndTime"
-        Me.VisitordateAndTime.Width = 120
-        '
-        'OutTime
-        '
-        Me.OutTime.HeaderText = "OutTime"
-        Me.OutTime.Name = "OutTime"
-        Me.OutTime.Width = 120
-        '
-        'OfficerToMeet
-        '
-        Me.OfficerToMeet.HeaderText = "OfficerToMeet"
-        Me.OfficerToMeet.Name = "OfficerToMeet"
-        Me.OfficerToMeet.Width = 120
-        '
-        'NatureOfWork
-        '
-        Me.NatureOfWork.HeaderText = "Nature Of Work"
-        Me.NatureOfWork.Name = "NatureOfWork"
-        '
-        'IssuingOfficer
-        '
-        Me.IssuingOfficer.HeaderText = "Issuing Officer"
-        Me.IssuingOfficer.Name = "IssuingOfficer"
-        Me.IssuingOfficer.Width = 120
-        '
-        'Reference
-        '
-        Me.Reference.HeaderText = "Reference"
-        Me.Reference.Items.AddRange(New Object() {"Rehersal", "Recording", "Live Telecast", "Personal Meet", "Reference"})
-        Me.Reference.Name = "Reference"
-        '
-        'TotalPerson
-        '
-        Me.TotalPerson.HeaderText = "Total Person"
-        Me.TotalPerson.Name = "TotalPerson"
-        Me.TotalPerson.Width = 50
-        '
         'lblplalistname
         '
         Me.lblplalistname.AutoSize = True
@@ -279,11 +280,21 @@ Partial Class Form1
         Me.cmdDeleteRow.Text = "Delete Row"
         Me.cmdDeleteRow.UseVisualStyleBackColor = True
         '
+        'cmdChangeCamera
+        '
+        Me.cmdChangeCamera.Location = New System.Drawing.Point(1167, 52)
+        Me.cmdChangeCamera.Name = "cmdChangeCamera"
+        Me.cmdChangeCamera.Size = New System.Drawing.Size(109, 23)
+        Me.cmdChangeCamera.TabIndex = 13
+        Me.cmdChangeCamera.Text = "Change Camera"
+        Me.cmdChangeCamera.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1875, 825)
+        Me.Controls.Add(Me.cmdChangeCamera)
         Me.Controls.Add(Me.cmdDeleteRow)
         Me.Controls.Add(Me.cmdNew)
         Me.Controls.Add(Me.lblplalistname)
@@ -335,4 +346,5 @@ Partial Class Form1
     Friend WithEvents lblplalistname As Label
     Friend WithEvents cmdNew As Button
     Friend WithEvents cmdDeleteRow As Button
+    Friend WithEvents cmdChangeCamera As Button
 End Class
