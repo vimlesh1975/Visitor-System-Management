@@ -39,7 +39,7 @@ Public Class Form1
 
         If CAMARAS.ShowDialog() = DialogResult.OK Then
             CAMARA = CAMARAS.VideoDevice
-            CAMARA.Source = "@device:pnp:\\?\usb#vid_1908&pid_2311&mi_00#6&203b7b69&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
+            'CAMARA.Source = "@device:pnp:\\?\usb#vid_1908&pid_2311&mi_00#6&203b7b69&0&0000#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\global"
             AddHandler CAMARA.NewFrame, New NewFrameEventHandler(AddressOf CAPTURAR)
             CAMARA.Start()
             cameraStarted = True
